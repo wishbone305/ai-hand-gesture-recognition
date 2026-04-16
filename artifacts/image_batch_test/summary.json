@@ -1,0 +1,48 @@
+{
+  "total_images": 388,
+  "decodable_images": 388,
+  "decode_failed": 0,
+  "detected_images": 187,
+  "no_hand_images": 201,
+  "detection_rate": 0.48195876288659795,
+  "total_hands_detected": 245,
+  "avg_hands_per_detected_image": 1.3101604278074865,
+  "elapsed_seconds": 9.438608582990128,
+  "images_per_second": 41.107754028410255,
+  "by_source": {
+    "openimages": {
+      "total": 301,
+      "detected": 155,
+      "detection_rate": 0.5149501661129569
+    },
+    "web_images": {
+      "total": 87,
+      "detected": 32,
+      "detection_rate": 0.367816091954023
+    }
+  },
+  "top1_label_counts": {
+    "fingers_5": 64,
+    "fingers_1": 35,
+    "fingers_0": 27,
+    "fingers_4": 26,
+    "fingers_2": 20,
+    "fingers_3": 15
+  },
+  "all_rule_label_counts": {
+    "fingers_5": 81,
+    "open_palm": 81,
+    "fingers_1": 46,
+    "fingers_4": 39,
+    "fingers_0": 32,
+    "fist": 32,
+    "thumbs_up": 30,
+    "fingers_2": 26,
+    "fingers_3": 21,
+    "ok": 16,
+    "peace": 11,
+    "pointing": 9,
+    "rock_sign": 5
+  },
+  "results_csv": "artifacts/image_batch_test/results.csv"
+}

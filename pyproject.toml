@@ -1,0 +1,42 @@
+[build-system]
+requires = ["setuptools>=69", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "hand-gesture-system"
+version = "0.1.0"
+description = "Model-agnostic hand mesh and gesture recognition pipeline"
+readme = "README.md"
+requires-python = ">=3.10"
+authors = [
+  { name = "AI Hand Gesture Team" }
+]
+dependencies = [
+  "numpy>=1.24",
+  "opencv-python>=4.9",
+  "mediapipe>=0.10",
+  "joblib>=1.3",
+  "requests>=2.31"
+]
+
+[project.optional-dependencies]
+onnx = ["onnxruntime>=1.17"]
+torch = ["torch>=2.2"]
+
+[project.scripts]
+hand-gesture = "hand_gesture_system.cli:main"
+hand-gesture-benchmark = "hand_gesture_system.benchmark:main"
+hand-gesture-collect-seq = "hand_gesture_system.training.collect:main"
+hand-gesture-export-dataset = "hand_gesture_system.training.export_dataset:main"
+hand-gesture-train-seq = "hand_gesture_system.training.train:main"
+hand-gesture-eval-seq = "hand_gesture_system.training.evaluate:main"
+hand-gesture-export-seq = "hand_gesture_system.training.export:main"
+hand-gesture-image-test = "hand_gesture_system.image_test:main"
+hand-gesture-fetch-images = "hand_gesture_system.training.fetch_images:main"
+hand-gesture-fetch-openimages = "hand_gesture_system.training.fetch_openimages:main"
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]
