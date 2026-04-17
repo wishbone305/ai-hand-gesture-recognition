@@ -93,28 +93,34 @@ GESTURE_CURLS: dict[str, dict[str, float]] = {
     "fist":       {"thumb": 1.0, "index": 1.0, "middle": 1.0, "ring": 1.0, "pinky": 1.0},
     "thumbs_up":  {"thumb": 0.0, "index": 1.0, "middle": 1.0, "ring": 1.0, "pinky": 1.0},
     "peace":      {"thumb": 0.8, "index": 0.0, "middle": 0.0, "ring": 1.0, "pinky": 1.0},
-    "pointing":   {"thumb": 0.6, "index": 0.0, "middle": 1.0, "ring": 1.0, "pinky": 1.0},
+    # pointing: thumb tucked inward (0.8) to distinguish from gun (thumb up 0.0)
+    "pointing":   {"thumb": 0.8, "index": 0.0, "middle": 1.0, "ring": 1.0, "pinky": 1.0},
     "rock":       {"thumb": 0.6, "index": 0.0, "middle": 1.0, "ring": 1.0, "pinky": 0.0},
     "call_me":    {"thumb": 0.0, "index": 1.0, "middle": 1.0, "ring": 1.0, "pinky": 0.0},
-    "ok":         {"thumb": 0.45,"index": 0.45,"middle": 0.0, "ring": 0.0, "pinky": 0.0},
+    # ok: tighter pinch (0.55) to distinguish from pinch (0.35 — lighter touch)
+    "ok":         {"thumb": 0.55,"index": 0.55,"middle": 0.0, "ring": 0.0, "pinky": 0.0},
     "three":      {"thumb": 0.85,"index": 0.0, "middle": 0.0, "ring": 0.0, "pinky": 1.0},
-    "four":       {"thumb": 0.9, "index": 0.0, "middle": 0.0, "ring": 0.0, "pinky": 0.0},
+    # four: all four fingers extended, thumb more tucked (0.95) vs three (0.85)
+    "four":       {"thumb": 0.95,"index": 0.0, "middle": 0.0, "ring": 0.0, "pinky": 0.0},
+    # gun: thumb fully up (0.0) + index extended — explicitly different from pointing
     "gun":        {"thumb": 0.0, "index": 0.0, "middle": 1.0, "ring": 1.0, "pinky": 1.0},
-    "pinch":      {"thumb": 0.35,"index": 0.35,"middle": 0.9, "ring": 0.9, "pinky": 0.9},
+    # pinch: lighter tip contact (0.35) — fingertips just touching, rest open
+    "pinch":      {"thumb": 0.35,"index": 0.35,"middle": 0.85,"ring": 0.85,"pinky": 0.85},
     "spiderman":  {"thumb": 0.0, "index": 0.0, "middle": 1.0, "ring": 1.0, "pinky": 0.0},
     "hand_heart": {"thumb": 0.1, "index": 0.1, "middle": 0.9, "ring": 0.9, "pinky": 0.9},
     "vulcan":     {"thumb": 0.0, "index": 0.0, "middle": 0.0, "ring": 0.0, "pinky": 0.0},
-    # Dynamic gestures (use transition-based generation)
-    "grab":       {"thumb": 0.9, "index": 0.9, "middle": 0.9, "ring": 0.9, "pinky": 0.9},
+    # grab: mid-curl (0.65) — hand in claw shape, NOT fully closed like fist (1.0)
+    "grab":       {"thumb": 0.65,"index": 0.65,"middle": 0.65,"ring": 0.65,"pinky": 0.65},
     "release":    {"thumb": 0.0, "index": 0.0, "middle": 0.0, "ring": 0.0, "pinky": 0.0},
     "pinch_zoom": {"thumb": 0.3, "index": 0.3, "middle": 0.8, "ring": 0.8, "pinky": 0.8},
-    "swipe_left": {"thumb": 0.0, "index": 0.0, "middle": 0.0, "ring": 0.0, "pinky": 0.0},
-    "swipe_right":{"thumb": 0.0, "index": 0.0, "middle": 0.0, "ring": 0.0, "pinky": 0.0},
+    "swipe_left": {"thumb": 0.2, "index": 0.0, "middle": 0.0, "ring": 0.0, "pinky": 0.0},
+    "swipe_right":{"thumb": 0.2, "index": 0.0, "middle": 0.0, "ring": 0.0, "pinky": 0.0},
 }
 
 # Gesture pairs that transition into each other (for dynamic sequence generation)
 _TRANSITIONS: dict[str, tuple[str, str]] = {
-    "grab":       ("open_palm", "fist"),
+    # grab transitions to mid-curl (claw), NOT all the way to fist
+    "grab":       ("open_palm", "grab"),
     "release":    ("fist", "open_palm"),
     "pinch_zoom": ("pinch", "open_palm"),
     "swipe_left": ("open_palm", "open_palm"),  # same pose, hand translates

@@ -97,12 +97,15 @@ def _device(prefer: str):
     return torch.device("cpu")
 
 
-def _coords_to_graph(x_seq: np.ndarray) -> np.ndarray:
-    """Reshape [N, T, F] → [N, 3, T, 21].
+def _coords_to_graph(x_seq: np.ndarray, add_velocity: bool = True) -> np.ndarray:
+    """Reshape [N, T, F] → [N, C, T, 21].
 
-    Uses the first 63 features (normalised landmark coords) and discards the
-    remaining hand-crafted features (finger states, pinch distance) since the
-    graph convolution learns its own spatial features from raw coordinates.
+    When add_velocity=True (default), C=6: (x,y,z, dx,dy,dz).
+    Velocity is the frame-to-frame displacement; the first frame gets zero
+    velocity.  This gives the model explicit motion information and is the
+    standard approach in ST-GCN literature for distinguishing dynamic gestures.
+
+    When add_velocity=False, C=3: (x,y,z) only.
     """
     N, T, F = x_seq.shape
     if F < _COORD_DIM:
@@ -110,10 +113,17 @@ def _coords_to_graph(x_seq: np.ndarray) -> np.ndarray:
             f"Expected at least {_COORD_DIM} features per frame, got {F}. "
             "Make sure data was collected with the default FeatureExtractor."
         )
-    coords = x_seq[:, :, :_COORD_DIM]                          # [N, T, 63]
-    coords = coords.reshape(N, T, _NUM_JOINTS, _COORD_CHANNELS) # [N, T, 21, 3]
-    coords = coords.transpose(0, 3, 1, 2)                       # [N, 3, T, 21]
-    return coords.astype(np.float32)
+    coords = x_seq[:, :, :_COORD_DIM]                           # [N, T, 63]
+    coords = coords.reshape(N, T, _NUM_JOINTS, _COORD_CHANNELS)  # [N, T, 21, 3]
+
+    if add_velocity:
+        # velocity[t] = coords[t] - coords[t-1]; velocity[0] = 0
+        vel = np.zeros_like(coords)
+        vel[:, 1:, :, :] = coords[:, 1:, :, :] - coords[:, :-1, :, :]  # [N, T, 21, 3]
+        combined = np.concatenate([coords, vel], axis=-1)                # [N, T, 21, 6]
+        return combined.transpose(0, 3, 1, 2).astype(np.float32)         # [N, 6, T, 21]
+    else:
+        return coords.transpose(0, 3, 1, 2).astype(np.float32)           # [N, 3, T, 21]
 
 
 def _run_eval(
@@ -190,8 +200,9 @@ def build_parser() -> argparse.ArgumentParser:
 
     # Model
     p.add_argument("--model-size", choices=list(STGCN_SIZE_PRESETS), default="medium",
-                   help="ST-GCN size preset (small/medium/large). "
-                        "small≈1M, medium≈5M, large≈20M parameters.")
+                   help="ST-GCN size preset (small/medium/large/jumbo).")
+    p.add_argument("--no-velocity", action="store_true",
+                   help="Use xyz only (3 channels). Default: xyz+velocity (6 channels).")
 
     # Training hyper-params
     p.add_argument("--epochs", type=int, default=60)
@@ -258,10 +269,13 @@ def main() -> int:
     )
     y, labels, _ = encode_labels(y_text)
 
-    # Convert [N, T, F] → [N, 3, T, 21] for ST-GCN
-    x = _coords_to_graph(x_raw)
+    # Convert [N, T, F] → [N, C, T, 21]; C=6 (xyz+velocity) or C=3 (xyz only)
+    use_velocity = not args.no_velocity
+    x = _coords_to_graph(x_raw, add_velocity=use_velocity)
+    in_channels = x.shape[1]
     print(f"Dataset: {x.shape[0]} samples, {len(labels)} classes, "
-          f"input shape per sample: {x.shape[1:]}")
+          f"input shape per sample: {x.shape[1:]}  "
+          f"({'xyz+vel' if use_velocity else 'xyz only'})")
 
     train_idx, val_idx = stratified_split_indices(y, val_ratio=args.val_ratio, seed=args.seed)
 
@@ -291,6 +305,7 @@ def main() -> int:
 
     model = build_stgcn(
         num_classes=len(labels),
+        in_channels=in_channels,
         model_size=args.model_size,
     )
 
@@ -406,6 +421,8 @@ def main() -> int:
                     "model_state": model.state_dict(),
                     "labels": labels,
                     "model_size": args.model_size,
+                    "in_channels": in_channels,
+                    "use_velocity": use_velocity,
                     "sequence_length": args.sequence_length,
                     "best_epoch": best_epoch,
                     "best_val_accuracy": best_val_acc,
