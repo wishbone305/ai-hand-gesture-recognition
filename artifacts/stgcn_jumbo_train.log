@@ -1,0 +1,7 @@
+Device: mps
+Dataset: 133160 samples, 20 classes, input shape per sample: (3, 32, 21)
+Model: STGCNGestureNet-jumbo  |  trainable params: 51,773,842
+/Users/rickeabati/Library/Python/3.12/lib/python/site-packages/torch/utils/data/dataloader.py:775: UserWarning: 'pin_memory' argument is set as true but not supported on MPS now, device pinned memory won't be used.
+  super().__init__(loader)
+  epoch 001 [ 100/1665]  loss=2.7178
+  epoch 001 [ 200/1665]  loss=2.5569
