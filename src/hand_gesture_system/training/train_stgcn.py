@@ -121,13 +121,15 @@ def _run_eval(
     loader,
     device,
     labels: list[str],
+    label_smoothing: float = 0.0,
 ) -> tuple[float, dict]:
     import torch
 
     model.eval()
     y_true, y_pred = [], []
     total_loss, total_n = 0.0, 0
-    criterion = torch.nn.CrossEntropyLoss()
+    # Use the same label_smoothing as training so val_loss is on the same scale
+    criterion = torch.nn.CrossEntropyLoss(label_smoothing=label_smoothing)
 
     with torch.no_grad():
         for xb, yb in loader:
@@ -376,7 +378,8 @@ def main() -> int:
             scheduler.step()
 
         train_loss = running_loss / max(n_samples, 1)
-        val_loss, val_metrics = _run_eval(model, val_loader, device, labels)
+        val_loss, val_metrics = _run_eval(model, val_loader, device, labels,
+                                          label_smoothing=args.label_smoothing)
         current_lr = optimizer.param_groups[0]["lr"]
 
         row = {

@@ -144,19 +144,29 @@ def joint_dropout(
     p_joint: float = 0.05,
     p_frame: float = 0.10,
 ) -> np.ndarray:
-    """Zero out random joints on random frames (simulates occlusion)."""
+    """Zero out random non-wrist joints on random frames (simulates occlusion).
+
+    Joint 0 (wrist) is always excluded from dropout: it is the coordinate
+    origin in wrist-relative data (always 0,0,0), so dropping it is a no-op
+    and including it in the mask distorts frame-level statistics.
+    """
     T = len(seq)
     result = seq.copy()
-    # Per-frame dropout
+    joints = _reshape_in(result)  # [T, 21, 3]
+
+    # Per-frame dropout: zero all non-wrist joints on selected frames
     frame_mask = rng.random(T) < p_frame
-    result[frame_mask] = 0.0
-    # Per-joint dropout (across all frames)
-    joint_mask = rng.random(_NUM_JOINTS) < p_joint
+    if frame_mask.any():
+        joints[frame_mask, 1:, :] = 0.0  # keep wrist (joint 0) intact
+
+    # Per-joint dropout across all frames (joints 1-20 only)
+    joint_candidates = np.arange(1, _NUM_JOINTS)  # exclude wrist
+    joint_mask = rng.random(len(joint_candidates)) < p_joint
     if joint_mask.any():
-        joints = _reshape_in(result)
-        joints[:, joint_mask, :] = 0.0
-        result = _reshape_out(joints)
-    return result
+        drop_indices = joint_candidates[joint_mask]
+        joints[:, drop_indices, :] = 0.0
+
+    return _reshape_out(joints)
 
 
 def gaussian_blur_time(

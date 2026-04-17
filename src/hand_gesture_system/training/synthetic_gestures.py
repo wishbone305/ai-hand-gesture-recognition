@@ -239,11 +239,13 @@ def generate_sequence(
             for t in t_vals
         ], dtype=np.float32)  # [T, 21, 3]
 
-        # Swipe gestures: add lateral translation
+        # Swipe gestures: add lateral translation to non-wrist joints only.
+        # Wrist (joint 0) stays at origin to preserve wrist-relative normalisation
+        # (real MediaPipe data always has wrist at 0,0,0 after FeatureExtractor).
         if gesture_name in ("swipe_left", "swipe_right"):
             direction = -1.0 if gesture_name == "swipe_left" else 1.0
             x_shift = np.linspace(0, direction * 0.5, seq_len)[:, None, None]
-            frames[:, :, 0:1] += x_shift
+            frames[:, 1:, 0:1] += x_shift  # joints 1-20 only; wrist (0) untouched
     else:
         base_pose = _make_pose(varied_curls)
         frames = np.tile(base_pose[np.newaxis], (seq_len, 1, 1))  # [T, 21, 3]
@@ -257,7 +259,9 @@ def generate_sequence(
     frames *= scale
 
     # --- Ornstein-Uhlenbeck tremor per joint per axis -----------------------
+    # Wrist (joint 0) is the coordinate origin — keep it at 0,0,0.
     tremor = _ou_noise((seq_len, 21, 3), rng, sigma=tremor_sigma)
+    tremor[:, 0, :] = 0.0
     frames += tremor
 
     # --- slow global rotation drift (hand moves slightly during hold) -------

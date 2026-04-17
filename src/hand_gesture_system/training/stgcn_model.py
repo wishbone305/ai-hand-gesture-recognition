@@ -39,10 +39,9 @@ NUM_JOINTS = 21
 HAND_EDGES: list[tuple[int, int]] = [
     (0, 1),  (1, 2),  (2, 3),   (3, 4),   # thumb
     (0, 5),  (5, 6),  (6, 7),   (7, 8),   # index
-    (5, 9),  (9, 10), (10, 11), (11, 12), # middle
-    (9, 13), (13, 14),(14, 15), (15, 16), # ring
-    (13, 17),(17, 18),(18, 19), (19, 20), # pinky
-    (0, 17),                              # palm base
+    (0, 9),  (5, 9),  (9, 10),  (10, 11), (11, 12), # middle (+ direct wrist link)
+    (0, 13), (9, 13), (13, 14), (14, 15), (15, 16), # ring   (+ direct wrist link)
+    (0, 17), (13, 17),(17, 18), (18, 19), (19, 20), # pinky
 ]
 
 STGCN_SIZE_PRESETS: dict[str, dict] = {
@@ -169,7 +168,6 @@ if nn is not None:
 
             # Input batch normalisation (applied to flattened joint×channel dim)
             self.data_bn = nn.BatchNorm1d(in_channels * NUM_JOINTS)
-            dropout: float = cfg["dropout"]
 
             # ST-GCN blocks — temporal resolution halved at blocks in downsample_at
             self.blocks = nn.ModuleList()
@@ -194,7 +192,7 @@ if nn is not None:
                     nn.init.kaiming_normal_(m.weight, mode="fan_out")
                     if m.bias is not None:
                         nn.init.zeros_(m.bias)
-                elif isinstance(m, nn.BatchNorm2d):
+                elif isinstance(m, (nn.BatchNorm2d, nn.BatchNorm1d)):
                     nn.init.ones_(m.weight)
                     nn.init.zeros_(m.bias)
                 elif isinstance(m, nn.Linear):
