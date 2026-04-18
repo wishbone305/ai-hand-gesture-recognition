@@ -123,8 +123,25 @@ _TRANSITIONS: dict[str, tuple[str, str]] = {
     "grab":       ("open_palm", "grab"),
     "release":    ("fist", "open_palm"),
     "pinch_zoom": ("pinch", "open_palm"),
-    "swipe_left": ("open_palm", "open_palm"),  # same pose, hand translates
+    "swipe_left": ("open_palm", "open_palm"),  # same pose, wrist translates
     "swipe_right":("open_palm", "open_palm"),
+}
+
+# ---------------------------------------------------------------------------
+# Per-gesture joint-position overrides applied AFTER curl interpolation.
+# Used when the canonical OPEN_PALM→FIST blend doesn't capture the right
+# joint orientation (e.g. thumbs_up thumb points upward, not sideways).
+# Keys are joint indices; values are [x, y, z] in wrist-relative palm-units.
+# ---------------------------------------------------------------------------
+_POSE_OVERRIDES: dict[str, dict[int, np.ndarray]] = {
+    # In OPEN_PALM the thumb extends diagonally (+x, -y).
+    # A real thumbs_up has the thumb pointing more straight up (less +x,
+    # mostly -y), centred above the fist knuckles.
+    "thumbs_up": {
+        2: np.array([ 0.190, -0.360,  0.050], dtype=np.float32),  # Thumb MCP
+        3: np.array([ 0.120, -0.520,  0.065], dtype=np.float32),  # Thumb IP
+        4: np.array([ 0.060, -0.690,  0.080], dtype=np.float32),  # Thumb Tip
+    },
 }
 
 GESTURE_NAMES: list[str] = sorted(GESTURE_CURLS.keys())
@@ -245,15 +262,26 @@ def generate_sequence(
             for t in t_vals
         ], dtype=np.float32)  # [T, 21, 3]
 
-        # Swipe gestures: add lateral translation to non-wrist joints only.
-        # Wrist (joint 0) stays at origin to preserve wrist-relative normalisation
-        # (real MediaPipe data always has wrist at 0,0,0 after FeatureExtractor).
+        # Swipe gestures: encode direction as wrist (joint 0) x-displacement.
+        #
+        # Why: in real MediaPipe the hand is reported wrist-relative, so when
+        # the whole hand translates during a swipe ALL joints move together and
+        # the relative positions stay constant — shifting joints 1-20 creates a
+        # signal that doesn't exist in real data.  Instead we put the cumulative
+        # wrist displacement into joint 0's x-coordinate (which is otherwise
+        # always 0).  The demo mirrors this by tracking raw wrist position and
+        # placing its displacement from the window-start in joint 0.
         if gesture_name in ("swipe_left", "swipe_right"):
             direction = -1.0 if gesture_name == "swipe_left" else 1.0
-            x_shift = np.linspace(0, direction * 0.5, seq_len)[:, None, None]
-            frames[:, 1:, 0:1] += x_shift  # joints 1-20 only; wrist (0) untouched
+            travel = rng.uniform(0.3, 0.8)          # random swipe extent in palm-sizes
+            frames[:, 0, 0] = np.linspace(0, direction * travel, seq_len)
     else:
         base_pose = _make_pose(varied_curls)
+        # Apply per-gesture joint-position overrides (e.g. thumbs_up thumb angle)
+        if gesture_name in _POSE_OVERRIDES:
+            for joint_idx, pos in _POSE_OVERRIDES[gesture_name].items():
+                noise = rng.uniform(-0.025, 0.025, 3).astype(np.float32)
+                base_pose[joint_idx] = pos + noise
         frames = np.tile(base_pose[np.newaxis], (seq_len, 1, 1))  # [T, 21, 3]
 
     # --- global random rotation (same for all frames — hand orientation) ---

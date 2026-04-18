@@ -236,6 +236,7 @@ def run(camera_index: int = 0) -> None:
     cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 720)
 
     coord_hist: dict[int, deque] = {}
+    wrist_pos_hist: dict[int, deque] = {}   # raw MediaPipe wrist (x,y,z) per frame
     show_idx = False
     fps_q: deque = deque(maxlen=30)
 
@@ -267,9 +268,15 @@ def run(camera_index: int = 0) -> None:
 
             # Coordinate extraction (wrist-relative, palm-size normalised)
             if i not in coord_hist:
-                coord_hist[i] = deque(maxlen=_SEQ_LEN)
+                coord_hist[i]      = deque(maxlen=_SEQ_LEN)
+                wrist_pos_hist[i]  = deque(maxlen=_SEQ_LEN)
             wx, wy, wz = lms[0].x, lms[0].y, lms[0].z
             scale = max(np.sqrt((lms[9].x-wx)**2+(lms[9].y-wy)**2+(lms[9].z-wz)**2), 1e-6)
+
+            # Track raw wrist position in normalised image space for swipe detection
+            wrist_pos_hist[i].append(np.array([wx, wy, wz], dtype=np.float32))
+
+            # Wrist-relative shape coords (joint 0 = (0,0,0) placeholder — overridden below)
             coords = np.array([
                 [(lm.x-wx)/scale, (lm.y-wy)/scale, (lm.z-wz)/scale] for lm in lms
             ], dtype=np.float32).flatten()
@@ -277,7 +284,16 @@ def run(camera_index: int = 0) -> None:
 
             # Gesture prediction
             if gesture_model is not None and len(coord_hist[i]) >= 8:
-                seq = np.stack(coord_hist[i])
+                seq = np.stack(coord_hist[i]).copy()             # [T, 63]
+
+                # Override joint-0 coords with wrist screen-space displacement
+                # from the oldest frame in the window.  This matches the synthetic
+                # training data where joint 0 x encodes cumulative wrist movement
+                # (swipe_left → negative x, swipe_right → positive x).
+                wrist_hist = np.stack(wrist_pos_hist[i])         # [T, 3]
+                wrist_disp = (wrist_hist - wrist_hist[0]) / scale # [T, 3], palm-size units
+                seq[:, :3]  = wrist_disp                          # slots 0-2 = joint 0
+
                 with torch.no_grad():
                     logits = gesture_model(_to_tensor(seq, use_velocity, in_channels))
                     probs  = torch.softmax(logits, dim=-1)[0]
@@ -291,6 +307,7 @@ def run(camera_index: int = 0) -> None:
         for k in list(coord_hist):
             if k >= len(result.hand_landmarks):
                 del coord_hist[k]
+                wrist_pos_hist.pop(k, None)
 
         # FPS
         fps_q.append(time.time())
