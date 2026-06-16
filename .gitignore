@@ -1,0 +1,11 @@
+# Large training datasets (regenerate locally)
+data/large_sequences_fast.npz
+
+# Jumbo model weights (exceed GitHub 100MB limit)
+artifacts/stgcn/stgcn_jumbo_1gb/
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/

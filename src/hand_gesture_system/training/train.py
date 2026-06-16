@@ -13,7 +13,7 @@ from hand_gesture_system.training.dataio import (
     save_labels_file,
     stratified_split_indices,
 )
-from hand_gesture_system.training.model import build_model
+from hand_gesture_system.training.model import MODEL_SIZE_PRESETS, build_model
 
 
 def _set_seed(seed: int) -> None:
@@ -88,6 +88,15 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--num-heads", type=int, default=4)
     parser.add_argument("--num-layers", type=int, default=2)
     parser.add_argument("--dropout", type=float, default=0.2)
+    parser.add_argument(
+        "--model-size",
+        choices=list(MODEL_SIZE_PRESETS),
+        default=None,
+        help=(
+            "Preset model size (overrides --hidden-dim / --num-heads / --num-layers / --dropout). "
+            "small=128d/2L, medium=192d/2L, large=384d/4L, xlarge=512d/6L"
+        ),
+    )
 
     parser.add_argument("--device", choices=["auto", "cpu", "cuda"], default="auto")
 
@@ -164,6 +173,7 @@ def main() -> int:
         num_heads=args.num_heads,
         num_layers=args.num_layers,
         dropout=args.dropout,
+        model_size=args.model_size,
     ).to(device)
 
     optimizer = torch.optim.AdamW(
@@ -230,6 +240,7 @@ def main() -> int:
                     "num_heads": args.num_heads,
                     "num_layers": args.num_layers,
                     "dropout": args.dropout,
+                    "model_size": args.model_size,
                 },
                 "best_epoch": best_epoch,
                 "best_val_accuracy": best_val_acc,

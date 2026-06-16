@@ -1,0 +1,123 @@
+[dataset] Initialising MediaPipe…
+I0000 00:00:1776531841.551149 2504858 gl_context.cc:407] GL version: 2.1 (2.1 Metal - 90.5), renderer: Apple M1 Pro
+INFO: Created TensorFlow Lite XNNPACK delegate for CPU.
+W0000 00:00:1776531841.560477 2504861 inference_feedback_manager.cc:121] Feedback manager requires a model with a single signature inference. Disabling support for feedback tensors.
+W0000 00:00:1776531841.573684 2504868 inference_feedback_manager.cc:121] Feedback manager requires a model with a single signature inference. Disabling support for feedback tensors.
+
+[call_me] Downloading for 200 more coords…
+  252 unique candidate URLs
+W0000 00:00:1776531852.579241 2504861 landmark_projection_calculator.cc:81] Using NORM_RECT without IMAGE_DIMENSIONS is only supported for the square ROI. Provide IMAGE_DIMENSIONS or use PROJECTION_MATRIX.
+    call_me: 20/200 (dl=30, det=20)
+  [call_me] final: 39 real frames (downloaded 113, detected 39)
+  [fist] +2 from existing images
+
+[fist] Downloading for 198 more coords…
+  70 unique candidate URLs
+  [fist] final: 3 real frames (downloaded 35, detected 1)
+
+[four] Downloading for 200 more coords…
+  37 unique candidate URLs
+  [four] final: 0 real frames (downloaded 21, detected 0)
+
+[gun] Downloading for 200 more coords…
+  84 unique candidate URLs
+    gun: 20/200 (dl=27, det=20)
+  [gun] final: 22 real frames (downloaded 39, detected 22)
+
+[hand_heart] Downloading for 200 more coords…
+  233 unique candidate URLs
+    hand_heart: 20/200 (dl=24, det=20)
+    hand_heart: 40/200 (dl=49, det=40)
+    hand_heart: 60/200 (dl=72, det=60)
+    hand_heart: 80/200 (dl=97, det=80)
+  [hand_heart] final: 84 real frames (downloaded 104, detected 84)
+
+[ok] Downloading for 200 more coords…
+  14 unique candidate URLs
+  [ok] final: 0 real frames (downloaded 9, detected 0)
+  [open_palm] +1 from existing images
+
+[open_palm] Downloading for 199 more coords…
+  54 unique candidate URLs
+  [open_palm] final: 2 real frames (downloaded 25, detected 1)
+  [peace] +3 from existing images
+
+[peace] Downloading for 197 more coords…
+  305 unique candidate URLs
+    peace: 23/200 (dl=115, det=20)
+  [peace] final: 34 real frames (downloaded 151, detected 31)
+
+[pinch] Downloading for 200 more coords…
+  18 unique candidate URLs
+  [pinch] final: 0 real frames (downloaded 12, detected 0)
+  [pointing] +1 from existing images
+
+[pointing] Downloading for 199 more coords…
+  56 unique candidate URLs
+  [pointing] final: 3 real frames (downloaded 34, detected 2)
+
+[rock] Downloading for 200 more coords…
+  224 unique candidate URLs
+    rock: 20/200 (dl=51, det=20)
+  [rock] final: 28 real frames (downloaded 112, detected 28)
+
+[spiderman] Downloading for 200 more coords…
+  17 unique candidate URLs
+  [spiderman] final: 0 real frames (downloaded 14, detected 0)
+
+[three] Downloading for 200 more coords…
+  35 unique candidate URLs
+  [three] final: 0 real frames (downloaded 23, detected 0)
+  [thumbs_up] +15 from existing images
+
+[thumbs_up] Downloading for 185 more coords…
+  35 unique candidate URLs
+  [thumbs_up] final: 15 real frames (downloaded 19, detected 0)
+
+[vulcan] Downloading for 200 more coords…
+  22 unique candidate URLs
+  [vulcan] final: 0 real frames (downloaded 16, detected 0)
+  [swipe_left] using 2 frames from open_palm
+  [swipe_right] using 2 frames from open_palm
+  [grab] using 3 frames from fist
+  [release] using 2 frames from open_palm
+  [pinch_zoom] using 0 frames from pinch
+
+[dataset] Building temporal sequences…
+  call_me        :   39 frames × 20 =   780 seqs
+  fist           :    3 frames × 20 =    60 seqs
+  WARNING: no frames for four — skipping
+  grab           :    3 frames × 20 =    60 seqs
+  gun            :   22 frames × 20 =   440 seqs
+  hand_heart     :   84 frames × 20 =  1680 seqs
+  WARNING: no frames for ok — skipping
+  open_palm      :    2 frames × 20 =    40 seqs
+  peace          :   34 frames × 20 =   680 seqs
+  WARNING: no frames for pinch — skipping
+  WARNING: no frames for pinch_zoom — skipping
+  pointing       :    3 frames × 20 =    60 seqs
+  release        :    2 frames × 20 =    40 seqs
+  rock           :   28 frames × 20 =   560 seqs
+  WARNING: no frames for spiderman — skipping
+  swipe_left     :    2 frames × 20 =    40 seqs
+  swipe_right    :    2 frames × 20 =    40 seqs
+  WARNING: no frames for three — skipping
+  thumbs_up      :   15 frames × 20 =   300 seqs
+  WARNING: no frames for vulcan — skipping
+
+Final dataset: 520 sequences, 13 classes
+  call_me        : 40
+  fist           : 40
+  grab           : 40
+  gun            : 40
+  hand_heart     : 40
+  open_palm      : 40
+  peace          : 40
+  pointing       : 40
+  release        : 40
+  rock           : 40
+  swipe_left     : 40
+  swipe_right    : 40
+  thumbs_up      : 40
+
+Saved data/large_sequences_fast.npz in 0.0s  ✓

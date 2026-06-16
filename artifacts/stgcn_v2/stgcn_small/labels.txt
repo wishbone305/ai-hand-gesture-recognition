@@ -1,0 +1,15 @@
+call_me
+fist
+four
+grab
+hand_heart
+ok
+open_palm
+peace
+pointing
+release
+rock
+swipe_left
+swipe_right
+three
+thumbs_up

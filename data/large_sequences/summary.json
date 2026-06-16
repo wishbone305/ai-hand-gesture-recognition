@@ -1,0 +1,30 @@
+{
+  "out_dir": "/Users/rickeabati/projects/ai hand gesture recognition/data/large_sequences",
+  "total_sequences": 88780,
+  "total_size_gb": 1.0,
+  "seq_len": 48,
+  "feature_dim": 63,
+  "classes": {
+    "call_me": 4439,
+    "fist": 4439,
+    "four": 4439,
+    "grab": 4439,
+    "gun": 4439,
+    "hand_heart": 4439,
+    "ok": 4439,
+    "open_palm": 4439,
+    "peace": 4439,
+    "pinch": 4439,
+    "pinch_zoom": 4439,
+    "pointing": 4439,
+    "release": 4439,
+    "rock": 4439,
+    "spiderman": 4439,
+    "swipe_left": 4439,
+    "swipe_right": 4439,
+    "three": 4439,
+    "thumbs_up": 4439,
+    "vulcan": 4439
+  },
+  "elapsed_s": 101.2
+}

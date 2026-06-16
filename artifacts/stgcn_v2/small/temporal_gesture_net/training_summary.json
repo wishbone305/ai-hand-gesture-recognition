@@ -1,0 +1,25 @@
+{
+  "dataset": "data/large_sequences_fast.npz",
+  "num_samples": 25500,
+  "num_classes": 15,
+  "classes": [
+    "call_me",
+    "fist",
+    "four",
+    "grab",
+    "hand_heart",
+    "ok",
+    "open_palm",
+    "peace",
+    "pointing",
+    "release",
+    "rock",
+    "swipe_left",
+    "swipe_right",
+    "three",
+    "thumbs_up"
+  ],
+  "best_epoch": -1,
+  "best_val_accuracy": -1.0,
+  "history": []
+}

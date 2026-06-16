@@ -14,6 +14,29 @@ CONNECTIONS = [
     (0, 17),
 ]
 
+# Triangles covering the palm and inter-finger webbing regions
+HAND_MESH_TRIANGLES: list[tuple[int, int, int]] = [
+    # Palm rays: wrist → adjacent MCP pairs
+    (0, 1, 5), (0, 5, 9), (0, 9, 13), (0, 13, 17),
+    # Thumb-index webbing
+    (1, 2, 5), (2, 5, 6),
+    # Index-middle webbing
+    (5, 6, 9), (6, 9, 10),
+    # Middle-ring webbing
+    (9, 10, 13), (10, 13, 14),
+    # Ring-pinky webbing
+    (13, 14, 17), (14, 17, 18),
+]
+
+# Individual finger bones rendered as thick capsules to fill finger surfaces
+FINGER_BONES: list[tuple[int, int]] = [
+    (1, 2), (2, 3), (3, 4),        # Thumb
+    (5, 6), (6, 7), (7, 8),        # Index
+    (9, 10), (10, 11), (11, 12),   # Middle
+    (13, 14), (14, 15), (15, 16),  # Ring
+    (17, 18), (18, 19), (19, 20),  # Pinky
+]
+
 
 def _landmark_to_pixel(mesh: HandMesh, index: int, width: int, height: int) -> tuple[int, int]:
     point = mesh.landmarks[index]
@@ -135,6 +158,58 @@ def _draw_record_button(
     )
 
 
+def _draw_hand_mesh(
+    frame: np.ndarray,
+    mesh: HandMesh,
+    width: int,
+    height: int,
+    mesh_color: tuple[int, int, int] = (60, 130, 240),
+    alpha: float = 0.45,
+) -> None:
+    """Draw a full filled mesh map of the hand onto *frame* in-place.
+
+    Rendering layers (bottom to top):
+      1. Semi-transparent filled triangles (palm + inter-finger webbing)
+      2. Semi-transparent thick capsules for each finger bone
+      3. Wireframe skeleton edges
+      4. Joint landmark dots
+    """
+    pts = [_landmark_to_pixel(mesh, i, width, height) for i in range(len(mesh.landmarks))]
+
+    # Scale bone thickness to palm size so it works at any resolution
+    wrist = np.array(pts[0], dtype=float)
+    mid_mcp = np.array(pts[9], dtype=float)
+    palm_size = float(np.linalg.norm(mid_mcp - wrist))
+    bone_thickness = max(8, int(palm_size * 0.13))
+    joint_r = bone_thickness // 2
+
+    overlay = frame.copy()
+
+    # Layer 1a: filled palm + webbing triangles
+    for a, b, c in HAND_MESH_TRIANGLES:
+        tri = np.array([pts[a], pts[b], pts[c]], dtype=np.int32)
+        cv2.fillPoly(overlay, [tri], mesh_color)
+
+    # Layer 1b: thick capsules for each finger bone
+    for start, end in FINGER_BONES:
+        cv2.line(overlay, pts[start], pts[end], mesh_color, bone_thickness, cv2.LINE_AA)
+
+    # Round caps at every joint to close gaps between capsule segments
+    for x, y in pts:
+        cv2.circle(overlay, (x, y), joint_r, mesh_color, -1, cv2.LINE_AA)
+
+    # Blend filled mesh with the original frame
+    cv2.addWeighted(overlay, alpha, frame, 1.0 - alpha, 0, frame)
+
+    # Layer 2: wireframe skeleton edges
+    for s, e in CONNECTIONS:
+        cv2.line(frame, pts[s], pts[e], (200, 230, 255), 1, cv2.LINE_AA)
+
+    # Layer 3: joint landmark dots
+    for x, y in pts:
+        cv2.circle(frame, (x, y), 4, (80, 255, 150), -1, cv2.LINE_AA)
+
+
 def annotate_frame(
     frame_bgr: np.ndarray,
     frame_result: FrameResult,
@@ -148,14 +223,7 @@ def annotate_frame(
     for hand_result in frame_result.hands:
         mesh = hand_result.mesh
 
-        for start, end in CONNECTIONS:
-            x1, y1 = _landmark_to_pixel(mesh, start, width, height)
-            x2, y2 = _landmark_to_pixel(mesh, end, width, height)
-            cv2.line(annotated, (x1, y1), (x2, y2), (70, 120, 255), 2)
-
-        for idx in range(len(mesh.landmarks)):
-            x, y = _landmark_to_pixel(mesh, idx, width, height)
-            cv2.circle(annotated, (x, y), 4, (80, 255, 150), -1)
+        _draw_hand_mesh(annotated, mesh, width, height)
 
         wrist_x, wrist_y = _landmark_to_pixel(mesh, 0, width, height)
         labels = [f"{p.label}:{p.score:.2f}" for p in hand_result.predictions[:3]]

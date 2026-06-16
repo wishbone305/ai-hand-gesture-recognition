@@ -1,0 +1,10 @@
+usage: train.py [-h] --dataset DATASET [--x-key X_KEY] [--y-key Y_KEY]
+                [--sequence-length SEQUENCE_LENGTH] [--epochs EPOCHS]
+                [--batch-size BATCH_SIZE] [--learning-rate LEARNING_RATE]
+                [--weight-decay WEIGHT_DECAY] [--val-ratio VAL_RATIO]
+                [--seed SEED] [--hidden-dim HIDDEN_DIM]
+                [--num-heads NUM_HEADS] [--num-layers NUM_LAYERS]
+                [--dropout DROPOUT] [--model-size {small,medium,large,xlarge}]
+                [--device {auto,cpu,cuda}] [--out-dir OUT_DIR]
+                [--run-name RUN_NAME] [--export-torchscript] [--export-onnx]
+train.py: error: argument --model-size: invalid choice: 'jumbo' (choose from 'small', 'medium', 'large', 'xlarge')
