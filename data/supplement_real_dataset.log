@@ -1,0 +1,96 @@
+[supplement] Initialising MediaPipe…
+I0000 00:00:1776548777.264768 2650630 gl_context.cc:407] GL version: 2.1 (2.1 Metal - 90.5), renderer: Apple M1 Pro
+INFO: Created TensorFlow Lite XNNPACK delegate for CPU.
+W0000 00:00:1776548777.272927 2650632 inference_feedback_manager.cc:121] Feedback manager requires a model with a single signature inference. Disabling support for feedback tensors.
+W0000 00:00:1776548777.280661 2650632 inference_feedback_manager.cc:121] Feedback manager requires a model with a single signature inference. Disabling support for feedback tensors.
+
+[call_me] have 39, need 161 more…
+  22 unique URLs
+W0000 00:00:1776548783.046511 2650635 landmark_projection_calculator.cc:81] Using NORM_RECT without IMAGE_DIMENSIONS is only supported for the square ROI. Provide IMAGE_DIMENSIONS or use PROJECTION_MATRIX.
+  [call_me] done: 39 frames (added 0)
+
+[fist] have 3, need 197 more…
+  54 unique URLs
+  [fist] done: 5 frames (added 2)
+
+[four] have 0, need 200 more…
+  70 unique URLs
+  [four] done: 2 frames (added 2)
+
+[gun] have 22, need 178 more…
+  54 unique URLs
+  [gun] done: 26 frames (added 4)
+
+[hand_heart] have 84, need 116 more…
+  61 unique URLs
+  [hand_heart] done: 85 frames (added 1)
+
+[ok] have 0, need 200 more…
+  6 unique URLs
+  [ok] done: 0 frames (added 0)
+
+[open_palm] have 2, need 198 more…
+  49 unique URLs
+  [open_palm] done: 3 frames (added 1)
+
+[peace] have 34, need 166 more…
+  302 unique URLs
+  [peace] done: 37 frames (added 3)
+
+[pinch] have 0, need 200 more…
+  8 unique URLs
+  [pinch] done: 0 frames (added 0)
+
+[pointing] have 3, need 197 more…
+  68 unique URLs
+  [pointing] done: 3 frames (added 0)
+
+[rock] have 28, need 172 more…
+  76 unique URLs
+  [rock] done: 30 frames (added 2)
+
+[spiderman] have 0, need 200 more…
+  77 unique URLs
+  [spiderman] done: 2 frames (added 2)
+
+[three] have 0, need 200 more…
+  155 unique URLs
+  [three] done: 6 frames (added 6)
+
+[thumbs_up] have 15, need 185 more…
+  71 unique URLs
+  [thumbs_up] done: 18 frames (added 3)
+
+[vulcan] have 0, need 200 more…
+  2 unique URLs
+  [vulcan] done: 0 frames (added 0)
+  [swipe_left] borrowed 3 from open_palm
+  [swipe_right] borrowed 3 from open_palm
+  [grab] borrowed 5 from fist
+  [release] borrowed 3 from open_palm
+  [pinch_zoom] borrowed 0 from pinch
+
+[supplement] Rebuilding temporal sequences…
+  call_me        :   39 frames →   780 seqs
+  fist           :    5 frames →   100 seqs
+  four           :    2 frames →    40 seqs
+  grab           :    5 frames →   100 seqs
+  gun            :   26 frames →   520 seqs
+  hand_heart     :   85 frames →  1700 seqs
+  WARNING: still no frames for ok — skipping
+  open_palm      :    3 frames →    60 seqs
+  peace          :   37 frames →   740 seqs
+  WARNING: still no frames for pinch — skipping
+  WARNING: still no frames for pinch_zoom — skipping
+  pointing       :    3 frames →    60 seqs
+  release        :    3 frames →    60 seqs
+  rock           :   30 frames →   600 seqs
+  spiderman      :    2 frames →    40 seqs
+  swipe_left     :    3 frames →    60 seqs
+  swipe_right    :    3 frames →    60 seqs
+  three          :    6 frames →   120 seqs
+  thumbs_up      :   18 frames →   360 seqs
+  WARNING: still no frames for vulcan — skipping
+
+Final: 640 sequences × 16 classes  (40 each)
+Saved data/large_sequences_fast.npz  ✓

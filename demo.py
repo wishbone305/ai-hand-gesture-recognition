@@ -61,13 +61,19 @@ import torch
 # ---------------------------------------------------------------------------
 
 def _load_model(ckpt_path: Path):
-    from hand_gesture_system.training.stgcn_model import build_stgcn
+    from hand_gesture_system.training.model import build_model
     ckpt = torch.load(ckpt_path, map_location="cpu", weights_only=False)
     labels: list[str] = list(ckpt["labels"])
-    model_size: str   = ckpt.get("model_size", "small")
-    in_channels: int  = ckpt.get("in_channels", 3)
+    cfg = ckpt.get("model_config", {})
+    model_size: str    = cfg.get("model_size") or ckpt.get("model_size", "small")
+    in_channels: int   = ckpt.get("in_channels", 3)
     use_velocity: bool = ckpt.get("use_velocity", False)
-    model = build_stgcn(num_classes=len(labels), in_channels=in_channels, model_size=model_size)
+    input_dim: int     = ckpt.get("input_dim", 63)
+    model = build_model(
+        input_dim=input_dim,
+        num_classes=len(labels),
+        model_size=model_size,
+    )
     model.load_state_dict(ckpt["model_state"])
     model.eval()
     return model, labels, use_velocity, in_channels
@@ -86,16 +92,9 @@ def _to_tensor(seq: np.ndarray, use_velocity: bool, in_channels: int) -> torch.T
     else:
         seq = seq[-_SEQ_LEN:]
 
-    coords = seq.reshape(_SEQ_LEN, 21, 3)   # [T, 21, 3]
-
-    if use_velocity and in_channels == 6:
-        vel = np.zeros_like(coords)
-        vel[1:] = coords[1:] - coords[:-1]
-        x = np.concatenate([coords, vel], axis=-1).transpose(2, 0, 1)[np.newaxis]  # [1,6,T,21]
-    else:
-        x = coords.transpose(2, 0, 1)[np.newaxis]                                  # [1,3,T,21]
-
-    return torch.from_numpy(x.astype(np.float32))
+    # TemporalGestureNet expects [batch, frames, features] = [1, T, 63]
+    x = seq[np.newaxis].astype(np.float32)   # [1, T, 63]
+    return torch.from_numpy(x)
 
 
 # ---------------------------------------------------------------------------

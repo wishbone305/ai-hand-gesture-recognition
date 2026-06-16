@@ -1,0 +1,25 @@
+Device: mps
+Dataset: 88780 samples, 20 classes, input shape per sample: (6, 48, 21)  (xyz+vel)
+Model: STGCNGestureNet-small  |  trainable params: 652,016
+/Users/rickeabati/Library/Python/3.12/lib/python/site-packages/torch/utils/data/dataloader.py:775: UserWarning: 'pin_memory' argument is set as true but not supported on MPS now, device pinned memory won't be used.
+  super().__init__(loader)
+  epoch 001 [ 100/1110]  loss=2.9001
+  epoch 001 [ 200/1110]  loss=2.7835
+  epoch 001 [ 300/1110]  loss=2.6822
+  epoch 001 [ 400/1110]  loss=2.5926
+  epoch 001 [ 500/1110]  loss=2.5238
+  epoch 001 [ 600/1110]  loss=2.4625
+  epoch 001 [ 700/1110]  loss=2.4111
+  epoch 001 [ 800/1110]  loss=2.3641
+  epoch 001 [ 900/1110]  loss=2.3205
+  epoch 001 [1000/1110]  loss=2.2793
+  epoch 001 [1100/1110]  loss=2.2380
+epoch 001 | train_loss=2.2345 | val_loss=1.6921 | val_acc=0.6313 | val_f1=0.6076 | lr=2.00e-04
+  epoch 002 [ 100/1110]  loss=1.7332
+  epoch 002 [ 200/1110]  loss=1.6800
+  epoch 002 [ 300/1110]  loss=1.6190
+  epoch 002 [ 400/1110]  loss=1.5612
+  epoch 002 [ 500/1110]  loss=1.5031
+  epoch 002 [ 600/1110]  loss=1.4509
+  epoch 002 [ 700/1110]  loss=1.4083
+  epoch 002 [ 800/1110]  loss=1.3733

@@ -1,0 +1,26 @@
+Target: 1.0 GB  |  20 gestures  |  ~4,439 sequences/class  |  seq_len=48
+  call_me        : generating 4,439 sequences ... done  (4,439 total, 808 seq/s)
+  fist           : generating 4,439 sequences ... done  (4,439 total, 874 seq/s)
+  four           : generating 4,439 sequences ... done  (4,439 total, 899 seq/s)
+  grab           : generating 4,439 sequences ... done  (4,439 total, 868 seq/s)
+  gun            : generating 4,439 sequences ... done  (4,439 total, 883 seq/s)
+  hand_heart     : generating 4,439 sequences ... done  (4,439 total, 890 seq/s)
+  ok             : generating 4,439 sequences ... done  (4,439 total, 898 seq/s)
+  open_palm      : generating 4,439 sequences ... done  (4,439 total, 902 seq/s)
+  peace          : generating 4,439 sequences ... done  (4,439 total, 908 seq/s)
+  pinch          : generating 4,439 sequences ... done  (4,439 total, 906 seq/s)
+  pinch_zoom     : generating 4,439 sequences ... done  (4,439 total, 894 seq/s)
+  pointing       : generating 4,439 sequences ... done  (4,439 total, 895 seq/s)
+  release        : generating 4,439 sequences ... done  (4,439 total, 885 seq/s)
+  rock           : generating 4,439 sequences ... done  (4,439 total, 886 seq/s)
+  spiderman      : generating 4,439 sequences ... done  (4,439 total, 887 seq/s)
+  swipe_left     : generating 4,439 sequences ... done  (4,439 total, 879 seq/s)
+  swipe_right    : generating 4,439 sequences ... done  (4,439 total, 872 seq/s)
+  three          : generating 4,439 sequences ... done  (4,439 total, 874 seq/s)
+  thumbs_up      : generating 4,439 sequences ... done  (4,439 total, 876 seq/s)
+  vulcan         : generating 4,439 sequences ... done  (4,439 total, 878 seq/s)
+
+Dataset built in 101s
+  Total sequences : 88,780
+  Total size      : 1.00 GB
+  Output dir      : /Users/rickeabati/projects/ai hand gesture recognition/data/large_sequences

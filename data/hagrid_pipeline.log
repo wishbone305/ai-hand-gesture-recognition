@@ -1,0 +1,164 @@
+[18:45:21] === Building HaGRID landmark dataset ===
+[hagrid] Loading dataset (streaming)…
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+[hagrid] Initialising MediaPipe…
+I0000 00:00:1776555926.746707 2714484 gl_context.cc:407] GL version: 2.1 (2.1 Metal - 90.5), renderer: Apple M1 Pro
+INFO: Created TensorFlow Lite XNNPACK delegate for CPU.
+W0000 00:00:1776555926.751194 2714488 inference_feedback_manager.cc:121] Feedback manager requires a model with a single signature inference. Disabling support for feedback tensors.
+W0000 00:00:1776555926.754717 2714488 inference_feedback_manager.cc:121] Feedback manager requires a model with a single signature inference. Disabling support for feedback tensors.
+  [call_me] loaded 39 from cache
+  [fist] loaded 5 from cache
+  [four] loaded 2 from cache
+  [gun] loaded 26 from cache
+  [hand_heart] loaded 85 from cache
+  [open_palm] loaded 3 from cache
+  [peace] loaded 37 from cache
+  [pointing] loaded 3 from cache
+  [rock] loaded 30 from cache
+  [spiderman] loaded 2 from cache
+  [three] loaded 6 from cache
+  [thumbs_up] loaded 18 from cache
+
+[hagrid] Need frames for: call_me=261, fist=295, four=298, ok=300, open_palm=297, peace=263, pointing=297, rock=270, three=294, thumbs_up=282
+[hagrid] Streaming images…
+
+W0000 00:00:1776555939.692224 2714489 landmark_projection_calculator.cc:81] Using NORM_RECT without IMAGE_DIMENSIONS is only supported for the square ROI. Provide IMAGE_DIMENSIONS or use PROJECTION_MATRIX.
+  [  50 det /    52 proc | 12s]  call_me=39  fist=5  four=2  ok=0  open_palm=38  peace=37  pointing=3  rock=30  three=6  thumbs_up=33
+  [ 100 det /   105 proc | 13s]  call_me=39  fist=5  four=2  ok=0  open_palm=69  peace=37  pointing=3  rock=30  three=6  thumbs_up=52
+  [ 150 det /   157 proc | 15s]  call_me=39  fist=5  four=2  ok=0  open_palm=102  peace=37  pointing=3  rock=30  three=6  thumbs_up=69
+  [ 200 det /   208 proc | 16s]  call_me=39  fist=5  four=2  ok=0  open_palm=133  peace=37  pointing=3  rock=30  three=6  thumbs_up=88
+  [ 250 det /   262 proc | 18s]  call_me=39  fist=5  four=2  ok=0  open_palm=162  peace=37  pointing=3  rock=30  three=6  thumbs_up=109
+  [ 300 det /   315 proc | 19s]  call_me=39  fist=5  four=2  ok=0  open_palm=191  peace=37  pointing=3  rock=30  three=6  thumbs_up=130
+  [ 350 det /   368 proc | 20s]  call_me=39  fist=5  four=2  ok=0  open_palm=222  peace=37  pointing=3  rock=30  three=6  thumbs_up=149
+  [ 400 det /   420 proc | 22s]  call_me=39  fist=5  four=2  ok=0  open_palm=245  peace=37  pointing=3  rock=30  three=6  thumbs_up=176
+  [ 450 det /   470 proc | 23s]  call_me=39  fist=5  four=2  ok=0  open_palm=278  peace=37  pointing=3  rock=30  three=6  thumbs_up=193
+  [ 500 det /   525 proc | 24s]  call_me=39  fist=5  four=2  ok=0  open_palm=300  peace=37  pointing=3  rock=30  three=6  thumbs_up=221
+  [ 550 det /   578 proc | 26s]  call_me=39  fist=5  four=2  ok=0  open_palm=300  peace=37  pointing=3  rock=30  three=6  thumbs_up=271
+  [ 600 det /   631 proc | 50s]  call_me=39  fist=5  four=2  ok=0  open_palm=300  peace=37  pointing=3  rock=51  three=6  thumbs_up=300
+  [ 650 det /   681 proc | 51s]  call_me=39  fist=5  four=2  ok=0  open_palm=300  peace=37  pointing=3  rock=101  three=6  thumbs_up=300
+  [ 700 det /   732 proc | 53s]  call_me=39  fist=5  four=2  ok=0  open_palm=300  peace=37  pointing=3  rock=151  three=6  thumbs_up=300
+  [ 750 det /   782 proc | 54s]  call_me=39  fist=5  four=2  ok=0  open_palm=300  peace=37  pointing=3  rock=201  three=6  thumbs_up=300
+  [ 800 det /   838 proc | 56s]  call_me=39  fist=5  four=2  ok=0  open_palm=300  peace=37  pointing=3  rock=251  three=6  thumbs_up=300
+  [ 850 det /   892 proc | 60s]  call_me=39  fist=5  four=2  ok=0  open_palm=300  peace=37  pointing=3  rock=299  three=8  thumbs_up=300
+  [ 900 det /   946 proc | 62s]  call_me=39  fist=5  four=2  ok=0  open_palm=300  peace=37  pointing=3  rock=300  three=57  thumbs_up=300
+  [ 950 det /  1001 proc | 63s]  call_me=39  fist=5  four=2  ok=0  open_palm=300  peace=37  pointing=3  rock=300  three=107  thumbs_up=300
+  [1000 det /  1054 proc | 65s]  call_me=39  fist=5  four=2  ok=0  open_palm=300  peace=37  pointing=3  rock=300  three=157  thumbs_up=300
+  [1050 det /  1105 proc | 66s]  call_me=39  fist=5  four=2  ok=0  open_palm=300  peace=37  pointing=3  rock=300  three=207  thumbs_up=300
+  [1100 det /  1157 proc | 68s]  call_me=39  fist=5  four=2  ok=0  open_palm=300  peace=37  pointing=3  rock=300  three=257  thumbs_up=300
+  [1150 det /  1211 proc | 120s]  call_me=39  fist=5  four=9  ok=0  open_palm=300  peace=37  pointing=3  rock=300  three=300  thumbs_up=300
+  [1200 det /  1262 proc | 122s]  call_me=39  fist=5  four=59  ok=0  open_palm=300  peace=37  pointing=3  rock=300  three=300  thumbs_up=300
+  [1250 det /  1314 proc | 123s]  call_me=39  fist=5  four=109  ok=0  open_palm=300  peace=37  pointing=3  rock=300  three=300  thumbs_up=300
+  [1300 det /  1366 proc | 125s]  call_me=39  fist=5  four=159  ok=0  open_palm=300  peace=37  pointing=3  rock=300  three=300  thumbs_up=300
+  [1350 det /  1418 proc | 126s]  call_me=39  fist=5  four=209  ok=0  open_palm=300  peace=37  pointing=3  rock=300  three=300  thumbs_up=300
+  [1400 det /  1469 proc | 128s]  call_me=39  fist=5  four=259  ok=0  open_palm=300  peace=37  pointing=3  rock=300  three=300  thumbs_up=300
+  [1450 det /  1519 proc | 180s]  call_me=39  fist=5  four=300  ok=9  open_palm=300  peace=37  pointing=3  rock=300  three=300  thumbs_up=300
+  [1500 det /  1570 proc | 182s]  call_me=39  fist=5  four=300  ok=59  open_palm=300  peace=37  pointing=3  rock=300  three=300  thumbs_up=300
+  [1550 det /  1620 proc | 184s]  call_me=39  fist=5  four=300  ok=109  open_palm=300  peace=37  pointing=3  rock=300  three=300  thumbs_up=300
+  [1600 det /  1670 proc | 185s]  call_me=39  fist=5  four=300  ok=159  open_palm=300  peace=37  pointing=3  rock=300  three=300  thumbs_up=300
+  [1650 det /  1720 proc | 187s]  call_me=39  fist=5  four=300  ok=208  open_palm=300  peace=37  pointing=4  rock=300  three=300  thumbs_up=300
+  [1700 det /  1770 proc | 188s]  call_me=39  fist=5  four=300  ok=252  open_palm=300  peace=37  pointing=10  rock=300  three=300  thumbs_up=300
+  [1750 det /  1822 proc | 190s]  call_me=39  fist=5  four=300  ok=285  open_palm=300  peace=37  pointing=27  rock=300  three=300  thumbs_up=300
+  [1800 det /  1874 proc | 191s]  call_me=39  fist=5  four=300  ok=300  open_palm=300  peace=37  pointing=62  rock=300  three=300  thumbs_up=300
+  [1850 det /  1929 proc | 193s]  call_me=39  fist=5  four=300  ok=300  open_palm=300  peace=37  pointing=112  rock=300  three=300  thumbs_up=300
+  [1900 det /  1982 proc | 195s]  call_me=39  fist=5  four=300  ok=300  open_palm=300  peace=37  pointing=162  rock=300  three=300  thumbs_up=300
+  [1950 det /  2034 proc | 196s]  call_me=39  fist=5  four=300  ok=300  open_palm=300  peace=37  pointing=212  rock=300  three=300  thumbs_up=300
+  [2000 det /  2086 proc | 198s]  call_me=39  fist=5  four=300  ok=300  open_palm=300  peace=37  pointing=262  rock=300  three=300  thumbs_up=300
+  [2050 det /  2137 proc | 272s]  call_me=39  fist=17  four=300  ok=300  open_palm=300  peace=37  pointing=300  rock=300  three=300  thumbs_up=300
+  [2100 det /  2191 proc | 274s]  call_me=39  fist=67  four=300  ok=300  open_palm=300  peace=37  pointing=300  rock=300  three=300  thumbs_up=300
+  [2150 det /  2244 proc | 275s]  call_me=39  fist=117  four=300  ok=300  open_palm=300  peace=37  pointing=300  rock=300  three=300  thumbs_up=300
+  [2200 det /  2298 proc | 277s]  call_me=39  fist=167  four=300  ok=300  open_palm=300  peace=37  pointing=300  rock=300  three=300  thumbs_up=300
+  [2250 det /  2350 proc | 279s]  call_me=39  fist=217  four=300  ok=300  open_palm=300  peace=37  pointing=300  rock=300  three=300  thumbs_up=300
+  [2300 det /  2405 proc | 280s]  call_me=39  fist=267  four=300  ok=300  open_palm=300  peace=37  pointing=300  rock=300  three=300  thumbs_up=300
+  [2350 det /  2461 proc | 294s]  call_me=56  fist=300  four=300  ok=300  open_palm=300  peace=37  pointing=300  rock=300  three=300  thumbs_up=300
+  [2400 det /  2512 proc | 296s]  call_me=106  fist=300  four=300  ok=300  open_palm=300  peace=37  pointing=300  rock=300  three=300  thumbs_up=300
+  [2450 det /  2562 proc | 297s]  call_me=156  fist=300  four=300  ok=300  open_palm=300  peace=37  pointing=300  rock=300  three=300  thumbs_up=300
+  [2500 det /  2615 proc | 299s]  call_me=206  fist=300  four=300  ok=300  open_palm=300  peace=37  pointing=300  rock=300  three=300  thumbs_up=300
+  [2550 det /  2669 proc | 300s]  call_me=256  fist=300  four=300  ok=300  open_palm=300  peace=37  pointing=300  rock=300  three=300  thumbs_up=300
+  [2600 det /  2720 proc | 390s]  call_me=300  fist=300  four=300  ok=300  open_palm=300  peace=43  pointing=300  rock=300  three=300  thumbs_up=300
+  [2650 det /  2771 proc | 392s]  call_me=300  fist=300  four=300  ok=300  open_palm=300  peace=93  pointing=300  rock=300  three=300  thumbs_up=300
+  [2700 det /  2825 proc | 394s]  call_me=300  fist=300  four=300  ok=300  open_palm=300  peace=143  pointing=300  rock=300  three=300  thumbs_up=300
+  [2750 det /  2878 proc | 395s]  call_me=300  fist=300  four=300  ok=300  open_palm=300  peace=193  pointing=300  rock=300  three=300  thumbs_up=300
+  [2800 det /  2933 proc | 397s]  call_me=300  fist=300  four=300  ok=300  open_palm=300  peace=243  pointing=300  rock=300  three=300  thumbs_up=300
+  [2850 det /  2986 proc | 398s]  call_me=300  fist=300  four=300  ok=300  open_palm=300  peace=293  pointing=300  rock=300  three=300  thumbs_up=300
+
+[hagrid] Done: 2857 detections from 2995 images in 399s
+  [swipe_left] borrowed 300 frames from open_palm
+  [swipe_right] borrowed 300 frames from open_palm
+  [grab] borrowed 300 frames from fist
+  [release] borrowed 300 frames from open_palm
+  [pinch_zoom] borrowed 0 frames from pinch
+
+[hagrid] Building temporal sequences…
+  call_me        :  300 frames →  6000 seqs
+  fist           :  300 frames →  6000 seqs
+  four           :  300 frames →  6000 seqs
+  grab           :  300 frames →  6000 seqs
+  gun            :   26 frames →   520 seqs
+  hand_heart     :   85 frames →  1700 seqs
+  ok             :  300 frames →  6000 seqs
+  open_palm      :  300 frames →  6000 seqs
+  peace          :  300 frames →  6000 seqs
+  WARNING: no frames for pinch — skipping
+  WARNING: no frames for pinch_zoom — skipping
+  pointing       :  300 frames →  6000 seqs
+  release        :  300 frames →  6000 seqs
+  rock           :  300 frames →  6000 seqs
+  spiderman      :    2 frames →    40 seqs
+  swipe_left     :  300 frames →  6000 seqs
+  swipe_right    :  300 frames →  6000 seqs
+  three          :  300 frames →  6000 seqs
+  thumbs_up      :  300 frames →  6000 seqs
+  WARNING: no frames for vulcan — skipping
+
+Final: 680 sequences × 17 classes (40 each)
+Saved data/large_sequences_fast.npz  ✓
+[18:52:58] HaGRID build done.
+[18:52:58] === Training small ===
+usage: train.py [-h] --dataset DATASET [--x-key X_KEY] [--y-key Y_KEY]
+                [--sequence-length SEQUENCE_LENGTH] [--epochs EPOCHS]
+                [--batch-size BATCH_SIZE] [--learning-rate LEARNING_RATE]
+                [--weight-decay WEIGHT_DECAY] [--val-ratio VAL_RATIO]
+                [--seed SEED] [--hidden-dim HIDDEN_DIM]
+                [--num-heads NUM_HEADS] [--num-layers NUM_LAYERS]
+                [--dropout DROPOUT] [--model-size {small,medium,large,xlarge}]
+                [--device {auto,cpu,cuda}] [--out-dir OUT_DIR]
+                [--run-name RUN_NAME] [--export-torchscript] [--export-onnx]
+train.py: error: unrecognized arguments: --lr 3e-4
+[18:53:00] === small done ===
+[18:53:00] === Training medium ===
+usage: train.py [-h] --dataset DATASET [--x-key X_KEY] [--y-key Y_KEY]
+                [--sequence-length SEQUENCE_LENGTH] [--epochs EPOCHS]
+                [--batch-size BATCH_SIZE] [--learning-rate LEARNING_RATE]
+                [--weight-decay WEIGHT_DECAY] [--val-ratio VAL_RATIO]
+                [--seed SEED] [--hidden-dim HIDDEN_DIM]
+                [--num-heads NUM_HEADS] [--num-layers NUM_LAYERS]
+                [--dropout DROPOUT] [--model-size {small,medium,large,xlarge}]
+                [--device {auto,cpu,cuda}] [--out-dir OUT_DIR]
+                [--run-name RUN_NAME] [--export-torchscript] [--export-onnx]
+train.py: error: unrecognized arguments: --lr 3e-4
+[18:53:01] === medium done ===
+[18:53:01] === Training large ===
+usage: train.py [-h] --dataset DATASET [--x-key X_KEY] [--y-key Y_KEY]
+                [--sequence-length SEQUENCE_LENGTH] [--epochs EPOCHS]
+                [--batch-size BATCH_SIZE] [--learning-rate LEARNING_RATE]
+                [--weight-decay WEIGHT_DECAY] [--val-ratio VAL_RATIO]
+                [--seed SEED] [--hidden-dim HIDDEN_DIM]
+                [--num-heads NUM_HEADS] [--num-layers NUM_LAYERS]
+                [--dropout DROPOUT] [--model-size {small,medium,large,xlarge}]
+                [--device {auto,cpu,cuda}] [--out-dir OUT_DIR]
+                [--run-name RUN_NAME] [--export-torchscript] [--export-onnx]
+train.py: error: unrecognized arguments: --lr 3e-4
+[18:53:02] === large done ===
+[18:53:02] === Training jumbo ===
+usage: train.py [-h] --dataset DATASET [--x-key X_KEY] [--y-key Y_KEY]
+                [--sequence-length SEQUENCE_LENGTH] [--epochs EPOCHS]
+                [--batch-size BATCH_SIZE] [--learning-rate LEARNING_RATE]
+                [--weight-decay WEIGHT_DECAY] [--val-ratio VAL_RATIO]
+                [--seed SEED] [--hidden-dim HIDDEN_DIM]
+                [--num-heads NUM_HEADS] [--num-layers NUM_LAYERS]
+                [--dropout DROPOUT] [--model-size {small,medium,large,xlarge}]
+                [--device {auto,cpu,cuda}] [--out-dir OUT_DIR]
+                [--run-name RUN_NAME] [--export-torchscript] [--export-onnx]
+train.py: error: argument --model-size: invalid choice: 'jumbo' (choose from 'small', 'medium', 'large', 'xlarge')
+[18:53:04] === jumbo done ===
+[18:53:04] All done. Models saved to artifacts/stgcn_v2.
